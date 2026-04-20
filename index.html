@@ -10,7 +10,6 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#111;padding:16px
 .app{display:grid;grid-template-columns:1fr 272px;gap:14px;align-items:start}
 
 .panel{background:#1c1c1c;border:1px solid #333;border-radius:16px;overflow:hidden}
-
 .cal-nav{display:flex;align-items:center;gap:8px;padding:13px 16px;border-bottom:1px solid #333}
 .nav-btn{background:#2a2a2a;border:1px solid #444;border-radius:8px;width:30px;height:30px;cursor:pointer;color:#fff;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .nav-btn:hover{background:#FFD600;color:#111}
@@ -19,25 +18,37 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#111;padding:16px
 .seg-btn{padding:4px 11px;border-radius:6px;font-size:11px;font-weight:500;cursor:pointer;border:none;background:transparent;color:#888;transition:all .1s}
 .seg-btn.on{background:#FFD600;color:#111;font-weight:700}
 
+/* VIIKKO */
 .week-body{padding:12px;display:flex;flex-direction:column;gap:8px}
 .week-day-row{display:flex;gap:10px;align-items:flex-start}
 .week-day-label{width:44px;flex-shrink:0;padding-top:2px;text-align:center}
 .wdl-name{font-size:9px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:.06em}
 .wdl-num{font-size:22px;font-weight:500;color:#aaa;line-height:1.1}
 .wdl-num.today-n{width:34px;height:34px;border-radius:50%;background:#FFD600;color:#111;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto}
-.week-day-drop{flex:1;min-height:44px;border-radius:10px;border:1.5px dashed #333;background:#161616;padding:6px;display:flex;flex-direction:column;gap:5px;transition:border-color .12s,background .12s}
+.week-day-drop{flex:1;min-height:44px;border-radius:10px;border:1.5px dashed #333;background:#161616;padding:6px;display:flex;flex-direction:column;gap:4px;transition:border-color .12s,background .12s}
 .week-day-drop.has-tasks{border-style:solid;border-color:#444;background:#1c1c1c}
 .week-day-drop.drag-over{border-color:#FFD600;background:#2a2500}
 .week-day-drop.today-drop{border-color:#555;border-style:solid;background:#1c1c1c}
-.wk-task{border-radius:8px;padding:7px 10px;font-size:12px;font-weight:500;line-height:1.4;display:flex;align-items:flex-start;justify-content:space-between;gap:6px;background:#FFD600;color:#111}
+.wk-task{border-radius:8px;padding:7px 10px;font-size:12px;font-weight:500;line-height:1.4;display:flex;align-items:flex-start;justify-content:space-between;gap:6px}
 .wk-task.korkea{background:#FFD600;color:#111;border-left:3px solid #cc9900}
 .wk-task.normaali{background:#e6c000;color:#111}
 .wk-task.matala{background:#b89b00;color:#111}
+.wk-task.done-task{background:#2a2a2a;color:#555;border:1px solid #333;text-decoration:line-through}
+.task-check{width:15px;height:15px;border-radius:50%;border:1.5px solid rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;background:rgba(0,0,0,.15);margin-top:1px;transition:all .12s}
+.wk-task.done-task .task-check{background:#555;border-color:#555}
+.task-check svg{width:8px;height:8px;stroke:#111;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.wk-task.done-task .task-check svg{stroke:#333}
+.wk-task.recurring{background:#2a2a2a;color:#FFD600;border:1px solid #444;border-left:3px solid #FFD600}
+.wk-task.recurring.done-rec{background:#1c1c1c;color:#555;border-color:#333;border-left-color:#555;text-decoration:line-through}
 .wk-task-name{flex:1;word-break:break-word}
-.wk-rm{background:none;border:none;cursor:pointer;color:#111;opacity:.4;font-size:15px;padding:0;line-height:1;flex-shrink:0}
+.wk-rm{background:none;border:none;cursor:pointer;color:inherit;opacity:.4;font-size:15px;padding:0;line-height:1;flex-shrink:0}
 .wk-rm:hover{opacity:1}
+.rec-check{background:none;border:1.5px solid #FFD600;border-radius:50%;width:16px;height:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.rec-check.done{background:#FFD600;border-color:#FFD600}
+.rec-check svg{width:8px;height:8px;stroke:#111;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 .drop-hint{font-size:11px;color:#444;text-align:center;padding:8px 0;pointer-events:none}
 
+/* KUUKAUSI */
 .month-body{padding:10px 12px 14px}
 .month-dow{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:4px}
 .month-dow span{text-align:center;font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;padding:4px 0}
@@ -49,12 +60,14 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#111;padding:16px
 .m-cell.drag-over{border-color:#FFD600;background:#2a2500}
 .m-num{font-size:11px;font-weight:500;color:#888;width:22px;height:22px;display:flex;align-items:center;justify-content:center;border-radius:50%;margin-bottom:2px}
 .m-num.today{background:#FFD600;color:#111;font-weight:700}
-.m-chip{border-radius:4px;padding:1px 5px;font-size:9px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:1px;background:#FFD600;color:#111}
+.m-chip{border-radius:4px;padding:1px 5px;font-size:9px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:1px}
 .m-chip.korkea{background:#FFD600;color:#111}
 .m-chip.normaali{background:#e6c000;color:#111}
 .m-chip.matala{background:#b89b00;color:#111}
+.m-chip.rec{background:#2a2a2a;color:#FFD600;border:1px solid #444}
 .m-more{font-size:9px;color:#666}
 
+/* PÄIVÄPANEELI */
 .day-panel{display:none;background:#1c1c1c;border:1px solid #333;border-radius:16px;overflow:hidden;margin-top:12px}
 .day-panel.open{display:block}
 .dp-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid #333}
@@ -64,16 +77,25 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#111;padding:16px
 .dp-body{padding:10px;display:flex;flex-direction:column;gap:6px}
 .dp-row{display:flex;align-items:center;gap:8px;padding:9px 12px;background:#2a2a2a;border-radius:10px;border:1px solid #333}
 .dp-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;background:#FFD600}
+.dp-dot.rec{background:transparent;border:2px solid #FFD600}
 .dp-name{font-size:12px;font-weight:500;color:#fff;flex:1}
 .dp-rm{background:none;border:none;cursor:pointer;color:#555;font-size:18px;line-height:1}
 .dp-rm:hover{color:#ff4444}
 .dp-empty{font-size:12px;color:#555;text-align:center;padding:16px;line-height:1.6}
 
+/* TEHTÄVÄPANEELI */
 .task-panel{background:#1c1c1c;border:1px solid #333;border-radius:16px;overflow:hidden}
 .tp-head{display:flex;align-items:center;justify-content:space-between;padding:14px;border-bottom:1px solid #333}
 .tp-title{font-size:13px;font-weight:500;color:#fff}
 .btn-add{height:30px;padding:0 13px;border-radius:8px;background:#FFD600;color:#111;font-size:12px;font-weight:700;cursor:pointer;border:none}
 .btn-add:hover{background:#ffe033}
+
+/* VÄLILEHDET */
+.tabs{display:flex;border-bottom:1px solid #333}
+.tab{flex:1;padding:9px;font-size:11px;font-weight:600;text-align:center;cursor:pointer;color:#666;border:none;background:none;transition:all .1s}
+.tab.on{color:#FFD600;border-bottom:2px solid #FFD600}
+.tab:hover{color:#fff}
+
 .t-list{padding:10px;display:flex;flex-direction:column;gap:6px}
 .t-card{border-radius:12px;border:1.5px solid #333;background:#2a2a2a;padding:10px 12px;cursor:grab;user-select:none;transition:opacity .15s}
 .t-card:active{cursor:grabbing;opacity:.5}
@@ -81,6 +103,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#111;padding:16px
 .t-card.sched{border-left:3px solid #FFD600;border-radius:0 12px 12px 0}
 .t-card.expired-card{border-left:3px solid #ff4444;border-radius:0 12px 12px 0}
 .t-card.done-card{opacity:.4;border-style:dashed}
+.r-card{border-radius:12px;border:1.5px solid #444;background:#2a2a2a;padding:10px 12px;border-left:3px solid #FFD600;border-radius:0 12px 12px 0}
 .t-top{display:flex;align-items:flex-start;gap:8px;margin-bottom:7px}
 .done-check{width:17px;height:17px;border-radius:50%;border:1.5px solid #555;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;background:transparent;margin-top:1px;transition:all .12s}
 .done-check.checked{background:#FFD600;border-color:#FFD600}
@@ -88,7 +111,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#111;padding:16px
 .t-name-wrap{flex:1;display:flex;align-items:flex-start;justify-content:space-between;gap:4px}
 .t-name{font-size:12px;font-weight:500;color:#fff;line-height:1.45;flex:1}
 .t-btns{display:flex;gap:2px;opacity:0;transition:opacity .12s;flex-shrink:0}
-.t-card:hover .t-btns{opacity:1}
+.t-card:hover .t-btns,.r-card:hover .t-btns{opacity:1}
 .iBtn{background:none;border:none;cursor:pointer;width:20px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#555}
 .iBtn:hover{background:#333;color:#fff}
 .iBtn svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -97,15 +120,17 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#111;padding:16px
 .pri-pill.korkea{background:#FFD600;color:#111}
 .pri-pill.normaali{background:#e6c000;color:#111}
 .pri-pill.matala{background:#b89b00;color:#111}
+.rec-pill{font-size:10px;font-weight:600;color:#FFD600;background:#2a2500;border:1px solid #FFD60044;padding:2px 8px;border-radius:20px}
 .tag-txt{font-size:10px;color:#555}
 .sched-txt{font-size:10px;color:#FFD600;margin-left:auto}
 .expired-lbl{font-size:10px;color:#ff4444;margin-left:auto}
 .t-empty{font-size:12px;color:#555;text-align:center;padding:20px;line-height:1.6}
 
+/* MODAALI */
 .m-wrap{display:none;position:fixed;inset:0;z-index:200;align-items:center;justify-content:center}
 .m-wrap.open{display:flex}
 .m-scrim{position:absolute;inset:0;background:rgba(0,0,0,.6)}
-.modal{position:relative;z-index:1;background:#1c1c1c;border:1px solid #444;border-radius:16px;padding:22px;width:92%;max-width:340px}
+.modal{position:relative;z-index:1;background:#1c1c1c;border:1px solid #444;border-radius:16px;padding:22px;width:92%;max-width:360px}
 .m-title{font-size:14px;font-weight:500;margin-bottom:16px;color:#fff}
 .field{margin-bottom:12px}
 .field label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#666;margin-bottom:5px}
@@ -119,6 +144,12 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#111;padding:16px
 .btn-ok:hover{background:#ffe033}
 .btn-ko{background:transparent;color:#888;border-color:#333}
 .btn-ko:hover{background:#2a2a2a}
+.rec-toggle{display:flex;gap:6px;margin-bottom:12px}
+.rec-toggle button{flex:1;padding:8px;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #444;background:#2a2a2a;color:#888;transition:all .1s}
+.rec-toggle button.on{background:#FFD600;color:#111;border-color:#FFD600;font-weight:700}
+.dow-picker{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:6px}
+.dow-btn{padding:6px 2px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid #444;background:#2a2a2a;color:#888;text-align:center}
+.dow-btn.on{background:#FFD600;color:#111;border-color:#FFD600}
 </style>
 </head>
 <body>
@@ -149,12 +180,17 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#111;padding:16px
   <div class="task-panel">
     <div class="tp-head">
       <span class="tp-title">Tehtävät</span>
-      <button class="btn-add" onclick="openModal()">+ Lisää</button>
+      <button class="btn-add" id="btn-add" onclick="openModal()">+ Lisää</button>
+    </div>
+    <div class="tabs">
+      <button class="tab on" id="tab-tasks" onclick="switchTab('tasks')">Tehtävät</button>
+      <button class="tab" id="tab-rec" onclick="switchTab('rec')">↻ Toistuvat</button>
     </div>
     <div class="t-list" id="t-list"></div>
   </div>
 </div>
 
+<!-- TEHTÄVÄMODAALI -->
 <div class="m-wrap" id="mWrap">
   <div class="m-scrim" onclick="closeModal()"></div>
   <div class="modal">
@@ -174,12 +210,49 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#111;padding:16px
   </div>
 </div>
 
+<!-- TOISTUVAMODAALI -->
+<div class="m-wrap" id="rWrap">
+  <div class="m-scrim" onclick="closeRModal()"></div>
+  <div class="modal">
+    <div class="m-title" id="rTitle">Uusi toistuva tehtävä</div>
+    <div class="field"><label>Otsikko</label><input id="rName" placeholder="Tehtävän nimi"></div>
+    <div class="field"><label>Toistuvuus</label>
+      <div class="rec-toggle">
+        <button id="rt-weekly" class="on" onclick="setRecType('weekly')">Viikoittain</button>
+        <button id="rt-monthly" onclick="setRecType('monthly')">Kuukausittain</button>
+      </div>
+    </div>
+    <div id="r-weekly-opts" class="field">
+      <label>Viikonpäivä</label>
+      <div class="dow-picker">
+        <button class="dow-btn on" data-dow="1" onclick="toggleDow(1)">Ma</button>
+        <button class="dow-btn" data-dow="2" onclick="toggleDow(2)">Ti</button>
+        <button class="dow-btn" data-dow="3" onclick="toggleDow(3)">Ke</button>
+        <button class="dow-btn" data-dow="4" onclick="toggleDow(4)">To</button>
+        <button class="dow-btn" data-dow="5" onclick="toggleDow(5)">Pe</button>
+        <button class="dow-btn" data-dow="6" onclick="toggleDow(6)">La</button>
+        <button class="dow-btn" data-dow="0" onclick="toggleDow(0)">Su</button>
+      </div>
+    </div>
+    <div id="r-monthly-opts" class="field" style="display:none">
+      <label>Kuukauden päivä</label>
+      <input id="rMonthDay" type="number" min="1" max="31" value="1" placeholder="1–31">
+    </div>
+    <div class="field"><label>Muistiinpanot</label><textarea id="rNotes" placeholder="Vapaaehtoinen"></textarea></div>
+    <div class="m-foot">
+      <button class="btn-ko" onclick="closeRModal()">Peruuta</button>
+      <button class="btn-ok" onclick="saveRecurring()">Tallenna</button>
+    </div>
+  </div>
+</div>
+
 <script>
-const DOW=['Ma','Ti','Ke','To','Pe','La','Su'];
+const DOW_NAMES=['Ma','Ti','Ke','To','Pe','La','Su'];
 const MON=['tammikuu','helmikuu','maaliskuu','huhtikuu','toukokuu','kesäkuu','heinäkuu','elokuu','syyskuu','lokakuu','marraskuu','joulukuu'];
 const MON_GEN=['tammikuuta','helmikuuta','maaliskuuta','huhtikuuta','toukokuuta','kesäkuuta','heinäkuuta','elokuuta','syyskuuta','lokakuuta','marraskuuta','joulukuuta'];
 
-let tasks=[],editId=null,dragId=null,selDate=null,view='week';
+let tasks=[],recurring=[],editId=null,editRId=null,dragId=null,selDate=null,view='week',activeTab='tasks';
+let recType='weekly',selDows=new Set([1]);
 const now=new Date();
 let viewYear=now.getFullYear(),viewMonth=now.getMonth();
 let weekStart=weekOf(now);
@@ -196,30 +269,63 @@ function fmtShort(s){if(!s)return'';const[,m,d]=s.split('-');return`${parseInt(d
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function uid(){return Math.random().toString(36).slice(2,10);}
 
+/* ── ISO viikonpäivä: Ma=1 … Su=7, mutta käytetään JS 0=Su,1=Ma… ── */
+function jsDay(isoStr){
+  const[y,m,d]=isoStr.split('-').map(Number);
+  return new Date(y,m-1,d).getDay(); // 0=Su,1=Ma,...,6=La
+}
+function domDay(isoStr){
+  // Palauttaa 1-based Ma=1…Su=7 → mutta dow-painikkeissa 0=Su,1=Ma,2=Ti,3=Ke,4=To,5=Pe,6=La
+  return jsDay(isoStr); // 0-6, 0=Su
+}
+
+function recMatchesDate(r,isoStr){
+  if(r.type==='weekly'){
+    return r.dows.includes(jsDay(isoStr));
+  } else {
+    const d=parseInt(isoStr.split('-')[2]);
+    return d===r.monthDay;
+  }
+}
+
+function recDoneKey(rId,isoStr){return`rdone-${rId}-${isoStr}`;}
+function isRecDone(rId,isoStr){return localStorage.getItem(recDoneKey(rId,isoStr))==='1';}
+function setRecDone(rId,isoStr,val){
+  if(val)localStorage.setItem(recDoneKey(rId,isoStr),'1');
+  else localStorage.removeItem(recDoneKey(rId,isoStr));
+}
+
 function checkPassword(){
-  const saved=localStorage.getItem('kal-auth');
-  if(saved==='ok')return;
+  if(localStorage.getItem('kal-auth')==='ok')return;
   const pw=prompt('Syötä salasana:');
   if(pw!=='3110'){
-    document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:system-ui;background:#111;color:#555">Väärä salasana — päivitä sivu uudelleen.</div>';
+    document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:system-ui;background:#111;color:#555">Väärä salasana.</div>';
     return;
   }
   localStorage.setItem('kal-auth','ok');
 }
 
 function load(){
-  try{const r=localStorage.getItem('kal5');tasks=r?JSON.parse(r):[];}
-  catch(e){tasks=[];}
+  try{const r=localStorage.getItem('kal5');tasks=r?JSON.parse(r):[];}catch(e){tasks=[];}
+  try{const r=localStorage.getItem('kal5-rec');recurring=r?JSON.parse(r):[];}catch(e){recurring=[];}
   expireOld();render();
 }
 function save(){try{localStorage.setItem('kal5',JSON.stringify(tasks));}catch(e){}}
+function saveRec(){try{localStorage.setItem('kal5-rec',JSON.stringify(recurring));}catch(e){}}
 
 function expireOld(){
   const ti=todayIso();let ch=false;
-  tasks.forEach(t=>{
-    if(t.scheduledDate&&t.scheduledDate<ti&&!t.done){t.scheduledDate=null;t.expired=true;ch=true;}
-  });
+  tasks.forEach(t=>{if(t.scheduledDate&&t.scheduledDate<ti&&!t.done){t.scheduledDate=null;t.expired=true;ch=true;}});
   if(ch)save();
+}
+
+function switchTab(tab){
+  activeTab=tab;
+  document.getElementById('tab-tasks').classList.toggle('on',tab==='tasks');
+  document.getElementById('tab-rec').classList.toggle('on',tab==='rec');
+  document.getElementById('btn-add').textContent=tab==='tasks'?'+ Lisää':'+ Toistuva';
+  document.getElementById('btn-add').onclick=tab==='tasks'?openModal:openRModal;
+  renderList();
 }
 
 function setView(v){
@@ -232,6 +338,7 @@ function navBack(){view==='week'?weekStart=addD(weekStart,-7):(--viewMonth<0&&(v
 function navFwd(){view==='week'?weekStart=addD(weekStart,7):(++viewMonth>11&&(viewMonth=0,viewYear++));closeDay();render();}
 function render(){view==='week'?renderWeek():renderMonth();renderList();if(selDate)renderDayPanel(selDate);}
 
+/* ── VIIKKO ── */
 function renderWeek(){
   const ws=weekStart,we=addD(ws,6);
   const sm=ws.getMonth(),em=we.getMonth();
@@ -244,17 +351,28 @@ function renderWeek(){
   for(let i=0;i<7;i++){
     const d=addD(ws,i),di=iso(d),isT=di===ti;
     const dt=tasks.filter(t=>t.scheduledDate===di);
+    const recs=recurring.filter(r=>recMatchesDate(r,di));
+    const hasAny=dt.length||recs.length;
     const numH=isT?`<div class="wdl-num today-n">${d.getDate()}</div>`:`<div class="wdl-num">${d.getDate()}</div>`;
-    const chipHtml=dt.length
-      ?dt.map(t=>`<div class="wk-task ${t.priority}"><span class="wk-task-name">${esc(t.name)}</span><button class="wk-rm" onclick="unschedule('${t.id}')">×</button></div>`).join('')
-      :`<div class="drop-hint">pudota tähän</div>`;
+    const taskChips=dt.map(t=>`<div class="wk-task ${t.priority}${t.done?' done-task':''}">
+        <button class="task-check" onclick="toggleDone('${t.id}')" title="${t.done?'Merkitse tekemättömäksi':'Merkitse tehdyksi'}">${t.done?chkSvg:''}</button>
+        <span class="wk-task-name" style="${t.done?'text-decoration:line-through':''}">${esc(t.name)}</span>
+        <button class="wk-rm" onclick="unschedule('${t.id}')">×</button>
+      </div>`).join('');
+    const recChips=recs.map(r=>{
+      const done=isRecDone(r.id,di);
+      return`<div class="wk-task recurring${done?' done-rec':''}">
+        <button class="rec-check${done?' done':''}" onclick="toggleRecDone('${r.id}','${di}')">${done?chkSvg:''}</button>
+        <span class="wk-task-name">${esc(r.name)}</span>
+      </div>`;
+    }).join('');
     h+=`<div class="week-day-row">
-  <div class="week-day-label"><div class="wdl-name">${DOW[i]}</div>${numH}</div>
-  <div class="week-day-drop${dt.length?' has-tasks':''}${isT?' today-drop':''}" id="wc-${di}"
+  <div class="week-day-label"><div class="wdl-name">${DOW_NAMES[i]}</div>${numH}</div>
+  <div class="week-day-drop${hasAny?' has-tasks':''}${isT?' today-drop':''}" id="wc-${di}"
     ondragover="event.preventDefault();document.getElementById('wc-${di}').classList.add('drag-over')"
     ondragleave="document.getElementById('wc-${di}').classList.remove('drag-over')"
     ondrop="document.getElementById('wc-${di}').classList.remove('drag-over');dropOn('${di}')">
-    ${chipHtml}
+    ${recChips}${taskChips}${!hasAny?'<div class="drop-hint">pudota tähän</div>':''}
   </div>
 </div>`;
   }
@@ -262,6 +380,7 @@ function renderWeek(){
   document.getElementById('cal-body').innerHTML=h;
 }
 
+/* ── KUUKAUSI ── */
 function renderMonth(){
   document.getElementById('cal-title').textContent=MON[viewMonth]+' '+viewYear;
   const ti=todayIso();
@@ -270,7 +389,7 @@ function renderMonth(){
   const dim=new Date(viewYear,viewMonth+1,0).getDate();
   const prev=new Date(viewYear,viewMonth,0).getDate();
   const total=Math.ceil((sd+dim)/7)*7;
-  let h=`<div class="month-body"><div class="month-dow">${DOW.map(d=>`<span>${d}</span>`).join('')}</div><div class="month-grid">`;
+  let h=`<div class="month-body"><div class="month-dow">${DOW_NAMES.map(d=>`<span>${d}</span>`).join('')}</div><div class="month-grid">`;
   for(let i=0;i<total;i++){
     let d,m,y,other=false;
     if(i<sd){d=prev-sd+i+1;m=viewMonth-1;y=viewYear;if(m<0){m=11;y--;}other=true;}
@@ -279,41 +398,49 @@ function renderMonth(){
     const di=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
     const isT=di===ti,isSel=di===selDate;
     const dt=tasks.filter(t=>t.scheduledDate===di);
+    const recs=recurring.filter(r=>recMatchesDate(r,di));
     const numH=isT?`<div class="m-num today">${d}</div>`:`<div class="m-num">${d}</div>`;
+    const allChips=[
+      ...recs.map(r=>`<div class="m-chip rec">${esc(r.name)}</div>`),
+      ...dt.map(t=>`<div class="m-chip ${t.priority}">${esc(t.name)}</div>`)
+    ];
+    const shown=allChips.slice(0,2).join('');
+    const extra=allChips.length>2?`<div class="m-more">+${allChips.length-2}</div>`:'';
     h+=`<div class="m-cell${other?' other':''}${isSel?' sel':''}" id="mc-${di}"
       ondragover="event.preventDefault();document.getElementById('mc-${di}').classList.add('drag-over')"
       ondragleave="document.getElementById('mc-${di}').classList.remove('drag-over')"
       ondrop="document.getElementById('mc-${di}').classList.remove('drag-over');dropOn('${di}')"
       onclick="openDay('${di}')">
-      ${numH}
-      ${dt.slice(0,2).map(t=>`<div class="m-chip ${t.priority}">${esc(t.name)}</div>`).join('')}
-      ${dt.length>2?`<div class="m-more">+${dt.length-2}</div>`:''}
+      ${numH}${shown}${extra}
     </div>`;
   }
   h+='</div></div>';
   document.getElementById('cal-body').innerHTML=h;
 }
 
+/* ── PÄIVÄPANEELI ── */
 function openDay(di){selDate=di;document.getElementById('day-panel').classList.add('open');renderDayPanel(di);if(view==='month')renderMonth();}
 function closeDay(){selDate=null;document.getElementById('day-panel').classList.remove('open');}
 function renderDayPanel(di){
   const[y,m,d]=di.split('-');
   document.getElementById('dp-title').textContent=`${parseInt(d)}. ${MON_GEN[parseInt(m)-1]} ${y}`;
   const dt=tasks.filter(t=>t.scheduledDate===di);
-  document.getElementById('dp-body').innerHTML=dt.length
-    ?dt.map(t=>`<div class="dp-row"><span class="dp-dot"></span><span class="dp-name">${esc(t.name)}</span><button class="dp-rm" onclick="unschedule('${t.id}')">×</button></div>`).join('')
-    :'<div class="dp-empty">Ei tehtäviä — raahaa tehtävä tähän päivään</div>';
+  const recs=recurring.filter(r=>recMatchesDate(r,di));
+  let html='';
+  recs.forEach(r=>{html+=`<div class="dp-row"><span class="dp-dot rec"></span><span class="dp-name">↻ ${esc(r.name)}</span></div>`;});
+  dt.forEach(t=>{html+=`<div class="dp-row"><span class="dp-dot"></span><span class="dp-name">${esc(t.name)}</span><button class="dp-rm" onclick="unschedule('${t.id}')">×</button></div>`;});
+  document.getElementById('dp-body').innerHTML=html||'<div class="dp-empty">Ei tehtäviä — raahaa tehtävä tähän päivään</div>';
 }
 
+/* ── LISTA ── */
 function renderList(){
   const el=document.getElementById('t-list');
-  if(!tasks.length){el.innerHTML='<div class="t-empty">Lisää tehtäviä ja<br>raahaa ne kalenteriin</div>';return;}
-  el.innerHTML=tasks.map(t=>`
+  if(activeTab==='tasks'){
+    if(!tasks.length){el.innerHTML='<div class="t-empty">Lisää tehtäviä ja<br>raahaa ne kalenteriin</div>';return;}
+    el.innerHTML=tasks.map(t=>`
 <div class="t-card${t.scheduledDate?' sched':''}${t.expired&&!t.done?' expired-card':''}${t.done?' done-card':''}" id="tc-${t.id}" draggable="true">
   <div class="t-top">
-    <div class="done-check${t.done?' checked':''}" onclick="toggleDone('${t.id}')">
-      ${t.done?chkSvg:''}
-    </div>
+    <div class="done-check${t.done?' checked':''}" onclick="toggleDone('${t.id}')">${t.done?chkSvg:''}</div>
     <div class="t-name-wrap">
       <span class="t-name" style="${t.done?'text-decoration:line-through;color:#555':''}">${esc(t.name)}</span>
       <div class="t-btns">
@@ -329,12 +456,37 @@ function renderList(){
     ${t.expired&&!t.done?`<span class="expired-lbl">↩ palautettu</span>`:''}
   </div>
 </div>`).join('');
-  tasks.forEach(t=>{
-    const c=document.getElementById('tc-'+t.id);if(!c)return;
-    c.addEventListener('dragstart',e=>{dragId=t.id;setTimeout(()=>c.classList.add('dragging'),0);e.dataTransfer.effectAllowed='move';});
-    c.addEventListener('dragend',()=>{c.classList.remove('dragging');dragId=null;});
-  });
+    tasks.forEach(t=>{
+      const c=document.getElementById('tc-'+t.id);if(!c)return;
+      c.addEventListener('dragstart',e=>{dragId=t.id;setTimeout(()=>c.classList.add('dragging'),0);e.dataTransfer.effectAllowed='move';});
+      c.addEventListener('dragend',()=>{c.classList.remove('dragging');dragId=null;});
+    });
+  } else {
+    if(!recurring.length){el.innerHTML='<div class="t-empty">Ei toistuvia tehtäviä</div>';return;}
+    el.innerHTML=recurring.map(r=>{
+      const desc=r.type==='weekly'
+        ?r.dows.map(d=>['Su','Ma','Ti','Ke','To','Pe','La'][d]).join(', ')
+        :`Kuun ${r.monthDay}. päivä`;
+      return`<div class="r-card" id="rc-${r.id}">
+  <div class="t-top">
+    <div class="t-name-wrap">
+      <span class="t-name">${esc(r.name)}</span>
+      <div class="t-btns">
+        <button class="iBtn" onclick="editRec('${r.id}')">${eSvg}</button>
+        <button class="iBtn" onclick="delRec('${r.id}')">${dSvg}</button>
+      </div>
+    </div>
+  </div>
+  <div class="t-foot">
+    <span class="rec-pill">↻ ${desc}</span>
+    ${r.notes?`<span class="tag-txt">${esc(r.notes)}</span>`:''}
+  </div>
+</div>`;
+    }).join('');
+  }
 }
+
+function toggleRecDone(rId,di){setRecDone(rId,di,!isRecDone(rId,di));render();}
 
 function dropOn(di){
   if(!dragId)return;
@@ -342,14 +494,10 @@ function dropOn(di){
   if(t){t.scheduledDate=di;t.expired=false;save();render();}
   dragId=null;
 }
-function unschedule(id){
-  const t=tasks.find(x=>x.id===id);if(t){t.scheduledDate=null;save();render();}
-}
-function toggleDone(id){
-  const t=tasks.find(x=>x.id===id);if(!t)return;
-  t.done=!t.done;if(t.done)t.expired=false;
-  save();render();
-}
+function unschedule(id){const t=tasks.find(x=>x.id===id);if(t){t.scheduledDate=null;save();render();}}
+function toggleDone(id){const t=tasks.find(x=>x.id===id);if(!t)return;t.done=!t.done;if(t.done)t.expired=false;save();render();}
+
+/* ── TEHTÄVÄMODAALI ── */
 function openModal(){
   editId=null;['mName','mTags','mNotes'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('mPri').value='normaali';
@@ -383,10 +531,62 @@ function saveTask(){
   else tasks.push(data);
   closeModal();save();render();
 }
-function delTask(id){
-  if(!confirm('Poistetaanko tehtävä?'))return;
-  tasks=tasks.filter(x=>x.id!==id);save();render();
+function delTask(id){if(!confirm('Poistetaanko tehtävä?'))return;tasks=tasks.filter(x=>x.id!==id);save();render();}
+
+/* ── TOISTUVAMODAALI ── */
+function setRecType(t){
+  recType=t;
+  document.getElementById('rt-weekly').classList.toggle('on',t==='weekly');
+  document.getElementById('rt-monthly').classList.toggle('on',t==='monthly');
+  document.getElementById('r-weekly-opts').style.display=t==='weekly'?'':'none';
+  document.getElementById('r-monthly-opts').style.display=t==='monthly'?'':'none';
 }
+function toggleDow(d){
+  if(selDows.has(d)&&selDows.size>1)selDows.delete(d);
+  else selDows.add(d);
+  document.querySelectorAll('.dow-btn').forEach(b=>{
+    b.classList.toggle('on',selDows.has(parseInt(b.dataset.dow)));
+  });
+}
+function openRModal(){
+  editRId=null;
+  document.getElementById('rName').value='';
+  document.getElementById('rNotes').value='';
+  document.getElementById('rMonthDay').value='1';
+  recType='weekly';selDows=new Set([1]);
+  setRecType('weekly');
+  document.querySelectorAll('.dow-btn').forEach(b=>b.classList.toggle('on',b.dataset.dow==='1'));
+  document.getElementById('rTitle').textContent='Uusi toistuva tehtävä';
+  document.getElementById('rWrap').classList.add('open');
+  setTimeout(()=>document.getElementById('rName').focus(),50);
+}
+function editRec(id){
+  const r=recurring.find(x=>x.id===id);if(!r)return;
+  editRId=id;
+  document.getElementById('rName').value=r.name;
+  document.getElementById('rNotes').value=r.notes||'';
+  recType=r.type;
+  if(r.type==='weekly'){selDows=new Set(r.dows);document.querySelectorAll('.dow-btn').forEach(b=>b.classList.toggle('on',selDows.has(parseInt(b.dataset.dow))));}
+  else{document.getElementById('rMonthDay').value=r.monthDay;}
+  setRecType(r.type);
+  document.getElementById('rTitle').textContent='Muokkaa toistuvaa';
+  document.getElementById('rWrap').classList.add('open');
+}
+function closeRModal(){document.getElementById('rWrap').classList.remove('open');}
+function saveRecurring(){
+  const name=document.getElementById('rName').value.trim();if(!name)return;
+  const data={
+    id:editRId||uid(),name,
+    type:recType,
+    dows:recType==='weekly'?[...selDows]:[],
+    monthDay:recType==='monthly'?parseInt(document.getElementById('rMonthDay').value)||1:null,
+    notes:document.getElementById('rNotes').value.trim(),
+  };
+  if(editRId){const i=recurring.findIndex(x=>x.id===editRId);recurring[i]=data;}
+  else recurring.push(data);
+  closeRModal();saveRec();render();
+}
+function delRec(id){if(!confirm('Poistetaanko toistuva tehtävä?'))return;recurring=recurring.filter(x=>x.id!==id);saveRec();render();}
 
 checkPassword();
 load();
