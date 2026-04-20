@@ -443,22 +443,18 @@ function renderList(){
     if(!tasks.length){el.innerHTML='<div class="t-empty">Lisää tehtäviä ja<br>raahaa ne kalenteriin</div>';return;}
     el.innerHTML=tasks.map(t=>`
 <div class="t-card${t.scheduledDate?' sched':''}${t.expired&&!t.done?' expired-card':''}${t.done?' done-card':''}" id="tc-${t.id}" draggable="true">
-  <div class="t-top">
+  <div style="display:flex;align-items:center;gap:6px">
     <div class="done-check${t.done?' checked':''}" onclick="toggleDone('${t.id}')">${t.done?chkSvg:''}</div>
-    <div class="t-name-wrap">
-      <span class="t-name" style="${t.done?'text-decoration:line-through;color:#555':''}">${esc(t.name)}</span>
-      <div class="t-btns">
-        <button class="iBtn" onclick="editTask('${t.id}')">${eSvg}</button>
-        <button class="iBtn" onclick="delTask('${t.id}')">${dSvg}</button>
-      </div>
+    <span class="t-name" style="flex:1;${t.done?'text-decoration:line-through;color:#555':''}">${esc(t.name)}</span>
+    <span class="pri-pill ${t.priority}">${t.priority}</span>
+    ${t.scheduledDate?`<span class="sched-txt">${fmtShort(t.scheduledDate)}</span>`:''}
+    ${t.expired&&!t.done?`<span class="expired-lbl">↩</span>`:''}
+    <div class="t-btns">
+      <button class="iBtn" onclick="editTask('${t.id}')">${eSvg}</button>
+      <button class="iBtn" onclick="delTask('${t.id}')">${dSvg}</button>
     </div>
   </div>
-  <div class="t-foot">
-    <span class="pri-pill ${t.priority}">${t.priority}</span>
-    ${t.tags.map(g=>`<span class="tag-txt">#${esc(g)}</span>`).join('')}
-    ${t.scheduledDate?`<span class="sched-txt">${fmtShort(t.scheduledDate)}</span>`:''}
-    ${t.expired&&!t.done?`<span class="expired-lbl">↩ palautettu</span>`:''}
-  </div>
+  ${t.tags.length?`<div style="padding-left:21px;margin-top:2px">${t.tags.map(g=>`<span class="tag-txt">#${esc(g)}</span>`).join(' ')}</div>`:''}
 </div>`).join('');
     tasks.forEach(t=>{
       const c=document.getElementById('tc-'+t.id);if(!c)return;
@@ -472,19 +468,15 @@ function renderList(){
         ?r.dows.map(d=>['Su','Ma','Ti','Ke','To','Pe','La'][d]).join(', ')
         :`Kuun ${r.monthDay}. päivä`;
       return`<div class="r-card" id="rc-${r.id}">
-  <div class="t-top">
-    <div class="t-name-wrap">
-      <span class="t-name">${esc(r.name)}</span>
-      <div class="t-btns">
-        <button class="iBtn" onclick="editRec('${r.id}')">${eSvg}</button>
-        <button class="iBtn" onclick="delRec('${r.id}')">${dSvg}</button>
-      </div>
+  <div style="display:flex;align-items:center;gap:6px">
+    <span class="t-name" style="flex:1">${esc(r.name)}</span>
+    <span class="rec-pill">↻ ${desc}</span>
+    <div class="t-btns">
+      <button class="iBtn" onclick="editRec('${r.id}')">${eSvg}</button>
+      <button class="iBtn" onclick="delRec('${r.id}')">${dSvg}</button>
     </div>
   </div>
-  <div class="t-foot">
-    <span class="rec-pill">↻ ${desc}</span>
-    ${r.notes?`<span class="tag-txt">${esc(r.notes)}</span>`:''}
-  </div>
+  ${r.notes?`<div style="padding-left:2px;margin-top:2px"><span class="tag-txt">${esc(r.notes)}</span></div>`:''}
 </div>`;
     }).join('');
   }
