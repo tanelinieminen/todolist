@@ -189,6 +189,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#111;padding:16px
     <div class="tabs">
       <button class="tab on" id="tab-tasks" onclick="switchTab('tasks')">Tehtävät</button>
       <button class="tab" id="tab-rec" onclick="switchTab('rec')">↻ Toistuvat</button>
+      <button class="tab" id="tab-archive" onclick="switchTab('archive')">Arkisto</button>
     </div>
     <div class="t-list" id="t-list"></div>
   </div>
@@ -327,8 +328,14 @@ function switchTab(tab){
   activeTab=tab;
   document.getElementById('tab-tasks').classList.toggle('on',tab==='tasks');
   document.getElementById('tab-rec').classList.toggle('on',tab==='rec');
-  document.getElementById('btn-add').textContent=tab==='tasks'?'+ Lisää':'+ Toistuva';
-  document.getElementById('btn-add').onclick=tab==='tasks'?openModal:openRModal;
+  document.getElementById('tab-archive').classList.toggle('on',tab==='archive');
+  const isArchive=tab==='archive';
+  const addBtn=document.getElementById('btn-add');
+  addBtn.style.display=isArchive?'none':'';
+  if(!isArchive){
+    addBtn.textContent=tab==='tasks'?'+ Lisää':'+ Toistuva';
+    addBtn.onclick=tab==='tasks'?openModal:openRModal;
+  }
   renderList();
 }
 
@@ -439,16 +446,37 @@ function renderDayPanel(di){
 /* ── LISTA ── */
 function renderList(){
   const el=document.getElementById('t-list');
-  if(activeTab==='tasks'){
-    if(!tasks.length){el.innerHTML='<div class="t-empty">Lisää tehtäviä ja<br>raahaa ne kalenteriin</div>';return;}
-    el.innerHTML=tasks.map(t=>`
-<div class="t-card${t.scheduledDate?' sched':''}${t.expired&&!t.done?' expired-card':''}${t.done?' done-card':''}" id="tc-${t.id}" draggable="true">
+
+  if(activeTab==='archive'){
+    const done=tasks.filter(t=>t.done);
+    if(!done.length){el.innerHTML='<div class="t-empty">Arkisto on tyhjä</div>';return;}
+    el.innerHTML=done.map(t=>{
+      const d=t.doneAt?new Date(t.doneAt).toLocaleDateString('fi-FI'):'';
+      return`<div class="t-card done-card" id="tc-${t.id}">
   <div style="display:flex;align-items:center;gap:6px">
-    <div class="done-check${t.done?' checked':''}" onclick="toggleDone('${t.id}')">${t.done?chkSvg:''}</div>
-    <span class="t-name" style="flex:1;${t.done?'text-decoration:line-through;color:#555':''}">${esc(t.name)}</span>
+    <div class="done-check checked" onclick="toggleDone('${t.id}')" title="Palauta listalle">${chkSvg}</div>
+    <span class="t-name" style="flex:1;text-decoration:line-through;color:#555">${esc(t.name)}</span>
+    <span class="sched-txt">${d}</span>
+    <div class="t-btns">
+      <button class="iBtn" onclick="delTask('${t.id}')" title="Poista pysyvästi">${dSvg}</button>
+    </div>
+  </div>
+</div>`;
+    }).join('');
+    return;
+  }
+
+  if(activeTab==='tasks'){
+    const active=tasks.filter(t=>!t.done);
+    if(!active.length){el.innerHTML='<div class="t-empty">Ei tehtäviä —<br>lisää uusi tai katso arkisto</div>';return;}
+    el.innerHTML=active.map(t=>`
+<div class="t-card${t.scheduledDate?' sched':''}${t.expired?' expired-card':''}" id="tc-${t.id}" draggable="true">
+  <div style="display:flex;align-items:center;gap:6px">
+    <div class="done-check" onclick="toggleDone('${t.id}')" title="Merkitse tehdyksi"></div>
+    <span class="t-name" style="flex:1">${esc(t.name)}</span>
     <span class="pri-pill ${t.priority}">${t.priority}</span>
     ${t.scheduledDate?`<span class="sched-txt">${fmtShort(t.scheduledDate)}</span>`:''}
-    ${t.expired&&!t.done?`<span class="expired-lbl">↩</span>`:''}
+    ${t.expired?`<span class="expired-lbl">↩</span>`:''}
     <div class="t-btns">
       <button class="iBtn" onclick="editTask('${t.id}')">${eSvg}</button>
       <button class="iBtn" onclick="delTask('${t.id}')">${dSvg}</button>
@@ -456,12 +484,13 @@ function renderList(){
   </div>
   ${t.tags.length?`<div style="padding-left:21px;margin-top:2px">${t.tags.map(g=>`<span class="tag-txt">#${esc(g)}</span>`).join(' ')}</div>`:''}
 </div>`).join('');
-    tasks.forEach(t=>{
+    active.forEach(t=>{
       const c=document.getElementById('tc-'+t.id);if(!c)return;
       c.addEventListener('dragstart',e=>{dragId=t.id;setTimeout(()=>c.classList.add('dragging'),0);e.dataTransfer.effectAllowed='move';});
       c.addEventListener('dragend',()=>{c.classList.remove('dragging');dragId=null;});
     });
-  } else {
+    return;
+  }
     if(!recurring.length){el.innerHTML='<div class="t-empty">Ei toistuvia tehtäviä</div>';return;}
     el.innerHTML=recurring.map(r=>{
       const desc=r.type==='weekly'
@@ -491,7 +520,13 @@ function dropOn(di){
   dragId=null;
 }
 function unschedule(id){const t=tasks.find(x=>x.id===id);if(t){t.scheduledDate=null;save();render();}}
-function toggleDone(id){const t=tasks.find(x=>x.id===id);if(!t)return;t.done=!t.done;if(t.done)t.expired=false;save();render();}
+function toggleDone(id){
+  const t=tasks.find(x=>x.id===id);if(!t)return;
+  t.done=!t.done;
+  if(t.done){t.expired=false;t.doneAt=new Date().toISOString();}
+  else{t.doneAt=null;}
+  save();render();
+}
 
 /* ── TEHTÄVÄMODAALI ── */
 function openModal(){
