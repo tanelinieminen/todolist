@@ -287,7 +287,8 @@ function domDay(isoStr){
 function recMatchesDate(r,isoStr){
   if(r.type==='weekly'){
     return r.dows.includes(jsDay(isoStr));
-  } else {
+  // toistuva-välilehti
+  if(activeTab==='rec'){
     const d=parseInt(isoStr.split('-')[2]);
     return d===r.monthDay;
   }
@@ -507,6 +508,9 @@ function renderList(){
   </div>
   ${r.notes?`<div style="padding-left:2px;margin-top:2px"><span class="tag-txt">${esc(r.notes)}</span></div>`:''}
 </div>`;
+    }).join('');
+  }
+}
     }).join('');
   }
 }
