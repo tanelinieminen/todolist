@@ -82,10 +82,11 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#111;padding:16px
 .right-panel::-webkit-scrollbar-thumb{background:#333;border-radius:4px}
 .pri-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;align-items:start}
 
-.pri-section{background:#1c1c1c;border:1px solid #333;border-radius:14px;overflow:hidden;flex-shrink:0}
-.pri-section.korkea{border-top:2px solid #FFD600}
-.pri-section.normaali{border-top:2px solid #e6c000}
-.pri-section.matala{border-top:2px solid #b89b00}
+.pri-section {border-radius:14px;overflow:hidden;flex-shrink:0}
+.pri-section.korkea{border-top:2px solid #FFD600;background:#1c1c1c;border:1px solid #333;border-top:2px solid #FFD600}
+.pri-section.normaali{background:#1c1c1c;border:1px solid #333;border-top:2px solid #e6c000}
+.pri-section.matala{background:#1c1c1c;border:1px solid #333;border-top:2px solid #b89b00}
+.pri-section.drop-over{outline:2px solid #FFD600;outline-offset:-2px}
 .pri-head{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid #2a2a2a;cursor:pointer;user-select:none}
 .pri-head:hover{background:#222}
 .pri-head-left{display:flex;align-items:center;gap:8px}
@@ -385,7 +386,10 @@ function renderRight(){
   ['korkea','normaali','matala'].forEach(pri=>{
     const list=active.filter(t=>t.priority===pri);
     const isOpen=!collapsed[pri];
-    html+=`<div class="pri-section ${pri}">
+    html+=`<div class="pri-section ${pri}" id="ps-${pri}"
+      ondragover="event.preventDefault();document.getElementById('ps-${pri}').classList.add('drop-over')"
+      ondragleave="document.getElementById('ps-${pri}').classList.remove('drop-over')"
+      ondrop="document.getElementById('ps-${pri}').classList.remove('drop-over');dropToPri('${pri}')">
   <div class="pri-head" onclick="toggleCollapse('${pri}')">
     <div class="pri-head-left">
       <span class="pri-dot ${pri}"></span>
@@ -461,6 +465,13 @@ function taskCard(t){
   </div>
   ${t.tags&&t.tags.length?`<div style="padding-left:19px;margin-top:1px">${t.tags.map(g=>`<span class="tag-txt">#${esc(g)}</span>`).join(' ')}</div>`:''}
 </div>`;
+}
+
+function dropToPri(pri){
+  if(!dragId)return;
+  const t=tasks.find(x=>x.id===dragId);
+  if(t&&t.priority!==pri){t.priority=pri;save();render();}
+  dragId=null;
 }
 
 function dropOn(di){
