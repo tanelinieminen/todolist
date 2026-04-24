@@ -170,6 +170,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#111;padding:16px
         <button class="nav-btn" onclick="navBack()">‹</button>
         <span class="cal-title" id="cal-title"></span>
         <button class="nav-btn" onclick="navFwd()">›</button>
+        <button class="nav-btn" onclick="goToday()" title="Tänään" style="font-size:11px;font-weight:700;width:auto;padding:0 8px">Tänään</button>
         <div class="seg">
           <button class="seg-btn on" id="vt-week" onclick="setView('week')">Viikko</button>
           <button class="seg-btn" id="vt-month" onclick="setView('month')">Kuukausi</button>
@@ -303,6 +304,11 @@ function setRecDone(rId,di,v){v?localStorage.setItem(recDoneKey(rId,di),'1'):loc
 function toggleRecDone(rId,di){setRecDone(rId,di,!isRecDone(rId,di));render();}
 function toggleCollapse(key){collapsed[key]=!collapsed[key];renderRight();}
 
+function goToday(){
+  const n=new Date();
+  viewYear=n.getFullYear();viewMonth=n.getMonth();weekStart=weekOf(n);
+  closeDay();render();
+}
 function setView(v){
   view=v;
   document.getElementById('vt-week').classList.toggle('on',v==='week');
