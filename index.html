@@ -7,7 +7,7 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:system-ui,-apple-system,sans-serif;background:#111;padding:16px;min-height:100vh}
-.app{display:grid;grid-template-columns:1fr 520px;gap:14px;align-items:start}
+.app{display:grid;grid-template-columns:340px 1fr;gap:14px;align-items:start}
 
 /* KALENTERI */
 .panel{background:#1c1c1c;border:1px solid #333;border-radius:16px;overflow:hidden}
@@ -80,6 +80,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#111;padding:16px
 .right-panel{display:flex;flex-direction:column;gap:10px;position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto}
 .right-panel::-webkit-scrollbar{width:4px}
 .right-panel::-webkit-scrollbar-thumb{background:#333;border-radius:4px}
+.pri-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;align-items:start}
 
 .pri-section{background:#1c1c1c;border:1px solid #333;border-radius:14px;overflow:hidden;flex-shrink:0}
 .pri-section.korkea{border-top:2px solid #FFD600}
@@ -378,9 +379,9 @@ function renderRight(){
   const active=tasks.filter(t=>!t.done);
   const done=tasks.filter(t=>t.done);
 
-  let html='';
+  let html='<div class="pri-row">';
 
-  // 3 prioriteettiosiota
+  // 3 prioriteettiosiota rinnakkain
   ['korkea','normaali','matala'].forEach(pri=>{
     const list=active.filter(t=>t.priority===pri);
     const isOpen=!collapsed[pri];
@@ -401,6 +402,7 @@ function renderRight(){
   </div>
 </div>`;
   });
+  html+='</div>';
 
   // Toistuvat
   const recOpen=!collapsed['rec'];
