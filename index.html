@@ -7,7 +7,9 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:system-ui,-apple-system,sans-serif;background:#111;padding:16px;min-height:100vh}
-.app{display:grid;grid-template-columns:1fr 272px;gap:14px;align-items:start}
+.app{display:grid;grid-template-columns:1fr 520px;gap:14px;align-items:start}
+
+/* KALENTERI */
 .panel{background:#1c1c1c;border:1px solid #333;border-radius:16px;overflow:hidden}
 .cal-nav{display:flex;align-items:center;gap:8px;padding:13px 16px;border-bottom:1px solid #333}
 .nav-btn{background:#2a2a2a;border:1px solid #444;border-radius:8px;width:30px;height:30px;cursor:pointer;color:#fff;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -18,43 +20,42 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#111;padding:16px
 .seg-btn.on{background:#FFD600;color:#111;font-weight:700}
 .week-body{padding:12px;display:flex;flex-direction:column;gap:8px}
 .week-day-row{display:flex;gap:10px;align-items:flex-start}
-.week-day-label{width:44px;flex-shrink:0;text-align:center}
+.week-day-label{width:40px;flex-shrink:0;text-align:center}
 .wdl-name{font-size:9px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:.06em}
-.wdl-num{font-size:22px;font-weight:500;color:#aaa;line-height:1.1}
-.wdl-num.today-n{width:34px;height:34px;border-radius:50%;background:#FFD600;color:#111;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto}
-.week-day-drop{flex:1;min-height:44px;border-radius:10px;border:1.5px dashed #333;background:#161616;padding:6px;display:flex;flex-direction:column;gap:4px;transition:border-color .12s,background .12s}
+.wdl-num{font-size:20px;font-weight:500;color:#aaa;line-height:1.1}
+.wdl-num.today-n{width:32px;height:32px;border-radius:50%;background:#FFD600;color:#111;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto}
+.week-day-drop{flex:1;min-height:40px;border-radius:10px;border:1.5px dashed #333;background:#161616;padding:5px;display:flex;flex-direction:column;gap:3px;transition:border-color .12s,background .12s}
 .week-day-drop.has-tasks{border-style:solid;border-color:#444;background:#1c1c1c}
 .week-day-drop.drag-over{border-color:#FFD600;background:#2a2500}
 .week-day-drop.today-drop{border-color:#555;border-style:solid;background:#1c1c1c}
-.wk-task{border-radius:8px;padding:6px 8px;font-size:12px;font-weight:500;line-height:1.4;display:flex;align-items:center;gap:6px}
+.wk-task{border-radius:6px;padding:5px 7px;font-size:11px;font-weight:500;line-height:1.3;display:flex;align-items:center;gap:5px}
 .wk-task.korkea{background:#FFD600;color:#111}
 .wk-task.normaali{background:#e6c000;color:#111}
 .wk-task.matala{background:#b89b00;color:#111}
 .wk-task.done-task{background:#2a2a2a;color:#555;border:1px solid #333;text-decoration:line-through}
 .wk-task.recurring{background:#2a2a2a;color:#FFD600;border:1px solid #444;border-left:3px solid #FFD600}
 .wk-task.recurring.done-rec{background:#1c1c1c;color:#555;border-color:#333;border-left-color:#555;text-decoration:line-through}
-.task-check{width:14px;height:14px;border-radius:50%;border:1.5px solid rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;background:rgba(0,0,0,.15)}
-.wk-task.done-task .task-check{background:#555;border-color:#555}
-.task-check svg{width:8px;height:8px;stroke:#111;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-.rec-check{width:14px;height:14px;border-radius:50%;border:1.5px solid #FFD600;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.task-check{width:13px;height:13px;border-radius:50%;border:1.5px solid rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;background:rgba(0,0,0,.15)}
+.task-check svg{width:7px;height:7px;stroke:#111;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.rec-check{width:13px;height:13px;border-radius:50%;border:1.5px solid #FFD600;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
 .rec-check.done{background:#FFD600}
-.rec-check svg{width:8px;height:8px;stroke:#111;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.rec-check svg{width:7px;height:7px;stroke:#111;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 .wk-task-name{flex:1;word-break:break-word}
-.wk-rm{background:none;border:none;cursor:pointer;color:inherit;opacity:.35;font-size:14px;padding:0;line-height:1;flex-shrink:0}
+.wk-rm{background:none;border:none;cursor:pointer;color:inherit;opacity:.35;font-size:13px;padding:0;line-height:1;flex-shrink:0}
 .wk-rm:hover{opacity:1}
-.drop-hint{font-size:11px;color:#444;text-align:center;padding:8px 0;pointer-events:none}
-.month-body{padding:10px 12px 14px}
+.drop-hint{font-size:10px;color:#444;text-align:center;padding:6px 0;pointer-events:none}
+.month-body{padding:8px 10px 12px}
 .month-dow{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:4px}
 .month-dow span{text-align:center;font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;padding:4px 0}
 .month-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
-.m-cell{min-height:64px;border-radius:10px;padding:4px 5px;border:1.5px solid transparent;cursor:pointer}
+.m-cell{min-height:58px;border-radius:10px;padding:4px;border:1.5px solid transparent;cursor:pointer}
 .m-cell:hover{background:#2a2a2a}
 .m-cell.other{opacity:.3}
 .m-cell.sel{background:#2a2a2a;border-color:#555}
 .m-cell.drag-over{border-color:#FFD600;background:#2a2500}
-.m-num{font-size:11px;font-weight:500;color:#888;width:22px;height:22px;display:flex;align-items:center;justify-content:center;border-radius:50%;margin-bottom:2px}
+.m-num{font-size:11px;font-weight:500;color:#888;width:20px;height:20px;display:flex;align-items:center;justify-content:center;border-radius:50%;margin-bottom:2px}
 .m-num.today{background:#FFD600;color:#111;font-weight:700}
-.m-chip{border-radius:4px;padding:1px 5px;font-size:9px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:1px}
+.m-chip{border-radius:3px;padding:1px 4px;font-size:9px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:1px}
 .m-chip.korkea{background:#FFD600;color:#111}
 .m-chip.normaali{background:#e6c000;color:#111}
 .m-chip.matala{background:#b89b00;color:#111}
@@ -62,56 +63,78 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#111;padding:16px
 .m-more{font-size:9px;color:#666}
 .day-panel{display:none;background:#1c1c1c;border:1px solid #333;border-radius:16px;overflow:hidden;margin-top:12px}
 .day-panel.open{display:block}
-.dp-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid #333}
+.dp-head{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid #333}
 .dp-title{font-size:13px;font-weight:500;color:#fff}
 .dp-close{background:none;border:none;cursor:pointer;color:#555;font-size:20px;line-height:1;padding:0}
 .dp-close:hover{color:#fff}
-.dp-body{padding:10px;display:flex;flex-direction:column;gap:6px}
-.dp-row{display:flex;align-items:center;gap:8px;padding:9px 12px;background:#2a2a2a;border-radius:10px;border:1px solid #333}
-.dp-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;background:#FFD600}
+.dp-body{padding:8px;display:flex;flex-direction:column;gap:5px}
+.dp-row{display:flex;align-items:center;gap:8px;padding:8px 10px;background:#2a2a2a;border-radius:8px;border:1px solid #333}
+.dp-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:#FFD600}
 .dp-dot.rec{background:transparent;border:2px solid #FFD600}
 .dp-name{font-size:12px;font-weight:500;color:#fff;flex:1}
-.dp-rm{background:none;border:none;cursor:pointer;color:#555;font-size:18px;line-height:1}
+.dp-rm{background:none;border:none;cursor:pointer;color:#555;font-size:16px;line-height:1}
 .dp-rm:hover{color:#ff4444}
-.dp-empty{font-size:12px;color:#555;text-align:center;padding:16px;line-height:1.6}
-.task-panel{background:#1c1c1c;border:1px solid #333;border-radius:16px;overflow:hidden;position:sticky;top:16px;max-height:calc(100vh - 32px);display:flex;flex-direction:column}
-.tp-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid #333;flex-shrink:0}
-.tp-title{font-size:13px;font-weight:500;color:#fff}
-.btn-add{height:28px;padding:0 12px;border-radius:8px;background:#FFD600;color:#111;font-size:12px;font-weight:700;cursor:pointer;border:none}
-.btn-add:hover{background:#ffe033}
-.tabs{display:flex;border-bottom:1px solid #333;flex-shrink:0}
-.tab{flex:1;padding:8px 4px;font-size:11px;font-weight:600;text-align:center;cursor:pointer;color:#666;border:none;background:none}
-.tab.on{color:#FFD600;border-bottom:2px solid #FFD600}
-.tab:hover{color:#fff}
-.t-list{padding:8px;display:flex;flex-direction:column;gap:4px;overflow-y:auto;flex:1}
-.t-list::-webkit-scrollbar{width:4px}
-.t-list::-webkit-scrollbar-thumb{background:#333;border-radius:4px}
-.t-card{border-radius:10px;border:1px solid #333;background:#2a2a2a;padding:7px 10px;cursor:grab;user-select:none}
+.dp-empty{font-size:12px;color:#555;text-align:center;padding:14px;line-height:1.6}
+
+/* OIKEA PANEELI — 3 listaa */
+.right-panel{display:flex;flex-direction:column;gap:10px;position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto}
+.right-panel::-webkit-scrollbar{width:4px}
+.right-panel::-webkit-scrollbar-thumb{background:#333;border-radius:4px}
+
+.pri-section{background:#1c1c1c;border:1px solid #333;border-radius:14px;overflow:hidden;flex-shrink:0}
+.pri-section.korkea{border-top:2px solid #FFD600}
+.pri-section.normaali{border-top:2px solid #e6c000}
+.pri-section.matala{border-top:2px solid #b89b00}
+.pri-head{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid #2a2a2a;cursor:pointer;user-select:none}
+.pri-head:hover{background:#222}
+.pri-head-left{display:flex;align-items:center;gap:8px}
+.pri-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.pri-dot.korkea{background:#FFD600}
+.pri-dot.normaali{background:#e6c000}
+.pri-dot.matala{background:#b89b00}
+.pri-label{font-size:12px;font-weight:600;color:#fff}
+.pri-count{font-size:11px;color:#555;background:#2a2a2a;padding:1px 7px;border-radius:20px}
+.pri-chevron{font-size:12px;color:#555;transition:transform .15s}
+.pri-chevron.open{transform:rotate(90deg)}
+.pri-body{padding:6px;display:flex;flex-direction:column;gap:3px}
+.pri-body.collapsed{display:none}
+.add-btn-small{width:100%;padding:5px;border:1px dashed #333;border-radius:8px;background:none;color:#555;font-size:11px;cursor:pointer;text-align:center}
+.add-btn-small:hover{border-color:#FFD600;color:#FFD600}
+
+.t-card{border-radius:8px;border:1px solid #333;background:#2a2a2a;padding:6px 9px;cursor:grab;user-select:none}
 .t-card:active{cursor:grabbing;opacity:.5}
 .t-card.dragging{opacity:.25}
-.t-card.sched{border-left:3px solid #FFD600;border-radius:0 10px 10px 0}
-.t-card.expired-card{border-left:3px solid #ff4444;border-radius:0 10px 10px 0}
+.t-card.sched{border-left:2px solid #FFD600;border-radius:0 8px 8px 0}
+.t-card.expired-card{border-left:2px solid #ff4444;border-radius:0 8px 8px 0}
 .t-card.done-card{opacity:.4;border-style:dashed;cursor:default}
-.r-card{border-radius:0 10px 10px 0;border:1px solid #444;background:#2a2a2a;padding:7px 10px;border-left:3px solid #FFD600}
-.t-row{display:flex;align-items:center;gap:6px}
-.done-check{width:15px;height:15px;border-radius:50%;border:1.5px solid #555;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;background:transparent}
+.r-card{border-radius:0 8px 8px 0;border:1px solid #444;background:#2a2a2a;padding:6px 9px;border-left:2px solid #FFD600}
+.t-row{display:flex;align-items:center;gap:5px}
+.done-check{width:14px;height:14px;border-radius:50%;border:1.5px solid #555;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;background:transparent}
 .done-check.checked{background:#FFD600;border-color:#FFD600}
 .done-check svg{width:8px;height:8px;stroke:#111;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-.t-name{font-size:12px;font-weight:500;color:#fff;flex:1;line-height:1.35}
+.t-name{font-size:11px;font-weight:500;color:#fff;flex:1;line-height:1.35}
 .t-btns{display:flex;gap:1px;opacity:0;flex-shrink:0}
 .t-card:hover .t-btns,.r-card:hover .t-btns{opacity:1}
-.iBtn{background:none;border:none;cursor:pointer;width:18px;height:18px;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#555}
+.iBtn{background:none;border:none;cursor:pointer;width:17px;height:17px;border-radius:3px;display:flex;align-items:center;justify-content:center;color:#555}
 .iBtn:hover{background:#333;color:#fff}
 .iBtn svg{width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.pri-pill{padding:1px 7px;border-radius:20px;font-size:10px;font-weight:600;white-space:nowrap}
-.pri-pill.korkea{background:#FFD600;color:#111}
-.pri-pill.normaali{background:#e6c000;color:#111}
-.pri-pill.matala{background:#b89b00;color:#111}
-.rec-pill{font-size:10px;font-weight:600;color:#FFD600;background:#2a2500;border:1px solid #FFD60044;padding:1px 7px;border-radius:20px;white-space:nowrap}
+.sched-txt{font-size:10px;color:#FFD600;white-space:nowrap;flex-shrink:0}
+.expired-lbl{font-size:10px;color:#ff4444;flex-shrink:0}
+.rec-pill{font-size:10px;font-weight:600;color:#FFD600;background:#2a2500;border:1px solid #FFD60044;padding:1px 6px;border-radius:20px;white-space:nowrap}
 .tag-txt{font-size:10px;color:#555}
-.sched-txt{font-size:10px;color:#FFD600;white-space:nowrap}
-.expired-lbl{font-size:10px;color:#ff4444}
-.t-empty{font-size:12px;color:#555;text-align:center;padding:20px;line-height:1.6}
+.t-empty{font-size:11px;color:#444;text-align:center;padding:10px;line-height:1.5}
+
+/* ARKISTO + TOISTUVAT ERILLINEN */
+.extra-panel{background:#1c1c1c;border:1px solid #333;border-radius:14px;overflow:hidden;flex-shrink:0}
+.ep-head{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid #2a2a2a;cursor:pointer}
+.ep-head:hover{background:#222}
+.ep-title{font-size:12px;font-weight:600;color:#888}
+.ep-chevron{font-size:12px;color:#555;transition:transform .15s}
+.ep-chevron.open{transform:rotate(90deg)}
+.ep-body{padding:6px;display:flex;flex-direction:column;gap:3px}
+.ep-body.collapsed{display:none}
+
+/* MODAALIT */
 .m-wrap{display:none;position:fixed;inset:0;z-index:200;align-items:center;justify-content:center}
 .m-wrap.open{display:flex}
 .m-scrim{position:absolute;inset:0;background:rgba(0,0,0,.6)}
@@ -160,18 +183,9 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#111;padding:16px
       <div class="dp-body" id="dp-body"></div>
     </div>
   </div>
-  <div class="task-panel">
-    <div class="tp-head">
-      <span class="tp-title">Tehtävät</span>
-      <button class="btn-add" id="btn-add" onclick="openModal()">+ Lisää</button>
-    </div>
-    <div class="tabs">
-      <button class="tab on" id="tab-tasks" onclick="switchTab('tasks')">Tehtävät</button>
-      <button class="tab" id="tab-rec" onclick="switchTab('rec')">↻ Toistuvat</button>
-      <button class="tab" id="tab-arch" onclick="switchTab('arch')">Arkisto</button>
-    </div>
-    <div class="t-list" id="t-list"></div>
-  </div>
+
+  <!-- OIKEA PANEELI -->
+  <div class="right-panel" id="right-panel"></div>
 </div>
 
 <!-- TEHTÄVÄMODAALI -->
@@ -234,10 +248,12 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#111;padding:16px
 const DOW_NAMES=['Ma','Ti','Ke','To','Pe','La','Su'];
 const MON_GEN=['tammikuuta','helmikuuta','maaliskuuta','huhtikuuta','toukokuuta','kesäkuuta','heinäkuuta','elokuuta','syyskuuta','lokakuuta','marraskuuta','joulukuuta'];
 const MON=['tammikuu','helmikuu','maaliskuu','huhtikuu','toukokuu','kesäkuu','heinäkuu','elokuu','syyskuu','lokakuu','marraskuu','joulukuu'];
+const PRI_LABELS={korkea:'Korkea prioriteetti',normaali:'Normaali prioriteetti',matala:'Matala prioriteetti'};
 
 let tasks=[],recurring=[],editId=null,editRId=null,dragId=null,selDate=null;
-let view='week',activeTab='tasks',recType='weekly';
+let view='week',recType='weekly';
 let selDows=new Set([1]);
+let collapsed={korkea:false,normaali:false,matala:false,rec:true,arch:true};
 const now=new Date();
 let viewYear=now.getFullYear(),viewMonth=now.getMonth();
 let weekStart=weekOf(now);
@@ -261,7 +277,6 @@ function checkPassword(){
   if(pw!=='3110'){document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#111;color:#555">Väärä salasana.</div>';return;}
   localStorage.setItem('kal-auth','ok');
 }
-
 function load(){
   try{const r=localStorage.getItem('kal5');tasks=r?JSON.parse(r):[];}catch(e){tasks=[];}
   try{const r=localStorage.getItem('kal5-rec');recurring=r?JSON.parse(r):[];}catch(e){recurring=[];}
@@ -269,13 +284,11 @@ function load(){
 }
 function save(){try{localStorage.setItem('kal5',JSON.stringify(tasks));}catch(e){}}
 function saveRec(){try{localStorage.setItem('kal5-rec',JSON.stringify(recurring));}catch(e){}}
-
 function expireOld(){
   const ti=todayIso();let ch=false;
   tasks.forEach(t=>{if(t.scheduledDate&&t.scheduledDate<ti&&!t.done){t.scheduledDate=null;t.expired=true;ch=true;}});
   if(ch)save();
 }
-
 function recMatchesDate(r,isoStr){
   const[y,m,d]=isoStr.split('-').map(Number);
   const jsD=new Date(y,m-1,d).getDay();
@@ -286,6 +299,7 @@ function recDoneKey(rId,di){return`rdone-${rId}-${di}`;}
 function isRecDone(rId,di){return localStorage.getItem(recDoneKey(rId,di))==='1';}
 function setRecDone(rId,di,v){v?localStorage.setItem(recDoneKey(rId,di),'1'):localStorage.removeItem(recDoneKey(rId,di));}
 function toggleRecDone(rId,di){setRecDone(rId,di,!isRecDone(rId,di));render();}
+function toggleCollapse(key){collapsed[key]=!collapsed[key];renderRight();}
 
 function setView(v){
   view=v;
@@ -295,17 +309,7 @@ function setView(v){
 }
 function navBack(){view==='week'?weekStart=addD(weekStart,-7):(--viewMonth<0&&(viewMonth=11,viewYear--));closeDay();render();}
 function navFwd(){view==='week'?weekStart=addD(weekStart,7):(++viewMonth>11&&(viewMonth=0,viewYear++));closeDay();render();}
-
-function switchTab(tab){
-  activeTab=tab;
-  ['tasks','rec','arch'].forEach(t=>document.getElementById('tab-'+t).classList.toggle('on',t===tab));
-  const btn=document.getElementById('btn-add');
-  if(tab==='arch'){btn.style.display='none';}
-  else{btn.style.display='';btn.textContent=tab==='tasks'?'+ Lisää':'+ Toistuva';btn.onclick=tab==='tasks'?openModal:openRModal;}
-  renderList();
-}
-
-function render(){view==='week'?renderWeek():renderMonth();renderList();if(selDate)renderDayPanel(selDate);}
+function render(){view==='week'?renderWeek():renderMonth();renderRight();if(selDate)renderDayPanel(selDate);}
 
 /* ── VIIKKO ── */
 function renderWeek(){
@@ -365,63 +369,96 @@ function renderDayPanel(di){
   const recs=recurring.filter(r=>recMatchesDate(r,di));
   let html=recs.map(r=>`<div class="dp-row"><span class="dp-dot rec"></span><span class="dp-name">↻ ${esc(r.name)}</span></div>`).join('');
   html+=dt.map(t=>`<div class="dp-row"><span class="dp-dot"></span><span class="dp-name">${esc(t.name)}</span><button class="dp-rm" onclick="unschedule('${t.id}')">×</button></div>`).join('');
-  document.getElementById('dp-body').innerHTML=html||'<div class="dp-empty">Ei tehtäviä — raahaa tehtävä tähän päivään</div>';
+  document.getElementById('dp-body').innerHTML=html||'<div class="dp-empty">Ei tehtäviä</div>';
 }
 
-/* ── TEHTÄVÄLISTA ── */
-function renderList(){
-  const el=document.getElementById('t-list');
+/* ── OIKEA PANEELI ── */
+function renderRight(){
+  const el=document.getElementById('right-panel');
+  const active=tasks.filter(t=>!t.done);
+  const done=tasks.filter(t=>t.done);
 
-  if(activeTab==='tasks'){
-    const active=tasks.filter(t=>!t.done);
-    if(!active.length){el.innerHTML='<div class="t-empty">Ei avoimia tehtäviä</div>';return;}
-    el.innerHTML=active.map(t=>`<div class="t-card${t.scheduledDate?' sched':''}${t.expired?' expired-card':''}" id="tc-${t.id}" draggable="true">
+  let html='';
+
+  // 3 prioriteettiosiota
+  ['korkea','normaali','matala'].forEach(pri=>{
+    const list=active.filter(t=>t.priority===pri);
+    const isOpen=!collapsed[pri];
+    html+=`<div class="pri-section ${pri}">
+  <div class="pri-head" onclick="toggleCollapse('${pri}')">
+    <div class="pri-head-left">
+      <span class="pri-dot ${pri}"></span>
+      <span class="pri-label">${PRI_LABELS[pri]}</span>
+      <span class="pri-count">${list.length}</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button onclick="event.stopPropagation();openModalWithPri('${pri}')" style="background:#FFD600;border:none;border-radius:6px;color:#111;font-size:10px;font-weight:700;padding:2px 8px;cursor:pointer">+ Lisää</button>
+      <span class="pri-chevron${isOpen?' open':''}">›</span>
+    </div>
+  </div>
+  <div class="pri-body${isOpen?'':' collapsed'}">
+    ${list.length?list.map(t=>taskCard(t)).join(''):'<div class="t-empty">Ei tehtäviä</div>'}
+  </div>
+</div>`;
+  });
+
+  // Toistuvat
+  const recOpen=!collapsed['rec'];
+  html+=`<div class="extra-panel">
+  <div class="ep-head" onclick="toggleCollapse('rec')">
+    <div style="display:flex;align-items:center;gap:8px">
+      <span class="ep-title">↻ Toistuvat</span>
+      <span class="pri-count">${recurring.length}</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button onclick="event.stopPropagation();openRModal()" style="background:#2a2a2a;border:1px solid #444;border-radius:6px;color:#FFD600;font-size:10px;font-weight:700;padding:2px 8px;cursor:pointer">+ Lisää</button>
+      <span class="ep-chevron${recOpen?' open':''}">›</span>
+    </div>
+  </div>
+  <div class="ep-body${recOpen?'':' collapsed'}">
+    ${recurring.length?recurring.map(r=>{
+      const desc=r.type==='weekly'?r.dows.map(d=>['Su','Ma','Ti','Ke','To','Pe','La'][d]).join(', '):`Kuun ${r.monthDay}. päivä`;
+      return`<div class="r-card" id="rc-${r.id}"><div class="t-row"><span class="t-name">${esc(r.name)}</span><span class="rec-pill">${desc}</span><div class="t-btns"><button class="iBtn" onclick="editRec('${r.id}')">${eSvg}</button><button class="iBtn" onclick="delRec('${r.id}')">${dSvg}</button></div></div></div>`;
+    }).join(''):'<div class="t-empty">Ei toistuvia</div>'}
+  </div>
+</div>`;
+
+  // Arkisto
+  const archOpen=!collapsed['arch'];
+  html+=`<div class="extra-panel">
+  <div class="ep-head" onclick="toggleCollapse('arch')">
+    <div style="display:flex;align-items:center;gap:8px">
+      <span class="ep-title">Arkisto</span>
+      <span class="pri-count">${done.length}</span>
+    </div>
+    <span class="ep-chevron${archOpen?' open':''}">›</span>
+  </div>
+  <div class="ep-body${archOpen?'':' collapsed'}">
+    ${done.length?done.map(t=>`<div class="t-card done-card"><div class="t-row"><div class="done-check checked" onclick="toggleDone('${t.id}')" title="Palauta">${chk}</div><span class="t-name" style="text-decoration:line-through;color:#555">${esc(t.name)}</span>${t.doneAt?`<span class="tag-txt">${new Date(t.doneAt).toLocaleDateString('fi-FI')}</span>`:''}<div class="t-btns"><button class="iBtn" onclick="delTask('${t.id}')">${dSvg}</button></div></div></div>`).join(''):'<div class="t-empty">Arkisto on tyhjä</div>'}
+  </div>
+</div>`;
+
+  el.innerHTML=html;
+
+  // Drag events
+  active.forEach(t=>{
+    const c=document.getElementById('tc-'+t.id);if(!c)return;
+    c.addEventListener('dragstart',e=>{dragId=t.id;setTimeout(()=>c.classList.add('dragging'),0);e.dataTransfer.effectAllowed='move';});
+    c.addEventListener('dragend',()=>{c.classList.remove('dragging');dragId=null;});
+  });
+}
+
+function taskCard(t){
+  return`<div class="t-card${t.scheduledDate?' sched':''}${t.expired?' expired-card':''}" id="tc-${t.id}" draggable="true">
   <div class="t-row">
     <div class="done-check" onclick="toggleDone('${t.id}')"></div>
     <span class="t-name">${esc(t.name)}</span>
-    <span class="pri-pill ${t.priority}">${t.priority}</span>
     ${t.scheduledDate?`<span class="sched-txt">${fmtShort(t.scheduledDate)}</span>`:''}
     ${t.expired?`<span class="expired-lbl">↩</span>`:''}
     <div class="t-btns"><button class="iBtn" onclick="editTask('${t.id}')">${eSvg}</button><button class="iBtn" onclick="delTask('${t.id}')">${dSvg}</button></div>
   </div>
-  ${t.tags&&t.tags.length?`<div style="padding-left:21px;margin-top:2px">${t.tags.map(g=>`<span class="tag-txt">#${esc(g)}</span>`).join(' ')}</div>`:''}
-</div>`).join('');
-    active.forEach(t=>{
-      const c=document.getElementById('tc-'+t.id);if(!c)return;
-      c.addEventListener('dragstart',e=>{dragId=t.id;setTimeout(()=>c.classList.add('dragging'),0);e.dataTransfer.effectAllowed='move';});
-      c.addEventListener('dragend',()=>{c.classList.remove('dragging');dragId=null;});
-    });
-    return;
-  }
-
-  if(activeTab==='rec'){
-    if(!recurring.length){el.innerHTML='<div class="t-empty">Ei toistuvia tehtäviä</div>';return;}
-    el.innerHTML=recurring.map(r=>{
-      const desc=r.type==='weekly'?r.dows.map(d=>['Su','Ma','Ti','Ke','To','Pe','La'][d]).join(', '):`Kuun ${r.monthDay}. päivä`;
-      return`<div class="r-card" id="rc-${r.id}">
-  <div class="t-row">
-    <span class="t-name">${esc(r.name)}</span>
-    <span class="rec-pill">↻ ${desc}</span>
-    <div class="t-btns"><button class="iBtn" onclick="editRec('${r.id}')">${eSvg}</button><button class="iBtn" onclick="delRec('${r.id}')">${dSvg}</button></div>
-  </div>
-  ${r.notes?`<div style="margin-top:2px"><span class="tag-txt">${esc(r.notes)}</span></div>`:''}
+  ${t.tags&&t.tags.length?`<div style="padding-left:19px;margin-top:1px">${t.tags.map(g=>`<span class="tag-txt">#${esc(g)}</span>`).join(' ')}</div>`:''}
 </div>`;
-    }).join('');
-    return;
-  }
-
-  if(activeTab==='arch'){
-    const done=tasks.filter(t=>t.done);
-    if(!done.length){el.innerHTML='<div class="t-empty">Arkisto on tyhjä</div>';return;}
-    el.innerHTML=done.map(t=>`<div class="t-card done-card" id="tc-${t.id}">
-  <div class="t-row">
-    <div class="done-check checked" onclick="toggleDone('${t.id}')" title="Palauta listalle">${chk}</div>
-    <span class="t-name" style="text-decoration:line-through;color:#555">${esc(t.name)}</span>
-    ${t.doneAt?`<span class="tag-txt">${new Date(t.doneAt).toLocaleDateString('fi-FI')}</span>`:''}
-    <div class="t-btns"><button class="iBtn" onclick="delTask('${t.id}')" title="Poista pysyvästi">${dSvg}</button></div>
-  </div>
-</div>`).join('');
-  }
 }
 
 function dropOn(di){
@@ -433,16 +470,15 @@ function dropOn(di){
 function unschedule(id){const t=tasks.find(x=>x.id===id);if(t){t.scheduledDate=null;save();render();}}
 function toggleDone(id){
   const t=tasks.find(x=>x.id===id);if(!t)return;
-  t.done=!t.done;
-  t.doneAt=t.done?new Date().toISOString():null;
+  t.done=!t.done;t.doneAt=t.done?new Date().toISOString():null;
   if(t.done)t.expired=false;
   save();render();
 }
 
-/* ── MODAALIT ── */
-function openModal(){
+function openModal(){openModalWithPri('normaali');}
+function openModalWithPri(pri){
   editId=null;['mName','mTags','mNotes'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('mPri').value='normaali';
+  document.getElementById('mPri').value=pri;
   document.getElementById('mTitle').textContent='Uusi tehtävä';
   document.getElementById('mWrap').classList.add('open');
   setTimeout(()=>document.getElementById('mName').focus(),50);
